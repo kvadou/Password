@@ -15,9 +15,13 @@ function writePassword() {
 // Add event listener to generate password button
 generateBtn.addEventListener('click', writePassword)
 
-// Function for the prompts that come up and make you choose the length and characters you want
+// Function to generate prompts that make the user choose the length and characters of the password
 function generatePassword() {
   let passwordLength = prompt("Please enter the number of characters you want for you new password.  It must be more than 8 but less than 128.");
+
+  while (passwordLength < 8 || passwordLength > 128) {
+    passwordLength = prompt("Length must be more than 8 but less than 128 characters.  How many characters would you like your password to be?");
+  }
 
   let lowerCases = confirm("Do you want lowercases in your password?");
 
@@ -26,6 +30,17 @@ function generatePassword() {
   let numbers = confirm("Do you want numbers in your password?");
 
   let special = confirm("Do you want special characters in your password?");
+
+  while (!(lowerCases || upperCases || numbers || special)) {
+    alert("You must select at least one character type!");
+    lowerCases = confirm("Do you want lowercases in your password?");
+
+    upperCases = confirm("Do you want uppercases in your password?");
+  
+    numbers = confirm("Do you want numbers in your password?");
+  
+    special = confirm("Do you want special characters in your password?");
+  }
 
   // this is a minimum count for numbers, lowerCases, upperCases & specialCharacters
   let minimumCount = 0;
@@ -89,7 +104,7 @@ let specialCharacters = " !\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
   // empty string variable for the for loop below
   let randomPasswordGenerated = "";
 
-  // loop getting random characters
+  // loop generating random characters
   for (let i = 0; i < (parseInt(passwordLength) - minimumCount); i++) {
     let randomNumberPicked = Math.floor(Math.random() * 4);
 
